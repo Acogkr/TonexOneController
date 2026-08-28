@@ -1,0 +1,21 @@
+[package]
+name = "tonex-ui-renderer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+build = "build.rs"
+
+[dependencies]
+embedded-graphics = "0.8.1"
+qrcode = { version = "0.14.1", default-features = false }
+tonex-domain = { path = "../tonex-domain", version = "0.1.0" }
+tonex-ui-model = { path = "../tonex-ui-model", version = "0.1.0" }
+tonex-skins = { path = "../tonex-skins", version = "0.1.0" }
+tonex-parameters = { path = "../tonex-parameters", version = "0.1.0" }
+
+[build-dependencies]
+png = "0.17.16"
+
+[lints]
+workspace = true

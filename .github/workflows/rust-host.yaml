@@ -1,0 +1,68 @@
+name: Rust host validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Check generated TONEX parameter registry
+        run: python tools/generate-tonex-parameters.py --check
+
+      - name: Check embedded Web UI
+        shell: pwsh
+        run: ./tools/check-web-assets.ps1
+
+      - name: Check diagnostic analyzer
+        shell: pwsh
+        run: >
+          ./tools/analyze-diagnostics.ps1
+          -LogPath ./tools/testdata/diagnostics-sample.log
+          -RequireZeroDrops
+          -MaxHeapDriftBytes 4096
+
+      - name: Lint
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Test
+        run: cargo test --workspace
+
+      - name: Install dependency audit tools
+        run: |
+          cargo install cargo-audit --version 0.22.2 --locked
+          cargo install cargo-deny --version 0.20.2 --locked
+          cargo install cargo-machete --version 0.9.2 --locked
+
+      - name: Audit dependency advisories
+        run: cargo audit
+
+      - name: Enforce dependency policy
+        run: cargo deny check
+
+      - name: Reject unused dependencies
+        run: cargo machete
+
+      - name: Audit unsafe boundaries
+        shell: pwsh
+        run: ./tools/check-rust-unsafe.ps1
+
+      - name: Enforce TONEX ONE-only product scope
+        shell: pwsh
+        run: ./tools/check-rust-product-scope.ps1

@@ -1,0 +1,100 @@
+[package]
+name = "tonex-controller"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+build = "build.rs"
+
+[dependencies]
+tonex-application = { path = "../../crates/tonex-application", version = "0.1.0" }
+tonex-boards = { path = "../../crates/tonex-boards", version = "0.1.0" }
+hal-contracts = { path = "../../crates/hal-contracts", version = "0.1.0" }
+tonex-settings = { path = "../../crates/tonex-settings", version = "0.1.0" }
+tonex-controls = { path = "../../crates/tonex-controls", version = "0.1.0" }
+tonex-midi = { path = "../../crates/tonex-midi", version = "0.1.0" }
+tonex-parameters = { path = "../../crates/tonex-parameters", version = "0.1.0" }
+tonex-domain = { path = "../../crates/tonex-domain", version = "0.1.0" }
+tonex-web = { path = "../../crates/tonex-web", version = "0.1.0" }
+tonex-ui-model = { path = "../../crates/tonex-ui-model", version = "0.1.0" }
+tonex-ui-renderer = { path = "../../crates/tonex-ui-renderer", version = "0.1.0" }
+
+[target.'cfg(target_os = "espidf")'.dependencies]
+esp-idf-usb-host = { path = "../../crates/esp-idf-usb-host", version = "0.1.0" }
+esp-idf-sys = { version = "0.37.2", features = ["binstart"] }
+esp-idf-svc = "0.52.1"
+esp-idf-board-io = { path = "../../crates/esp-idf-board-io", version = "0.1.0" }
+esp-idf-i2c = { path = "../../crates/esp-idf-i2c", version = "0.1.0" }
+esp-idf-touch = { path = "../../crates/esp-idf-touch", version = "0.1.0" }
+esp-idf-display = { path = "../../crates/esp-idf-display", version = "0.1.0" }
+esp-idf-midi = { path = "../../crates/esp-idf-midi", version = "0.1.0", default-features = false }
+esp-idf-diagnostics = { path = "../../crates/esp-idf-diagnostics", version = "0.1.0" }
+
+[build-dependencies]
+embuild = { version = "0.33.1", features = ["espidf"] }
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = "espressif/usb_host_cdc_acm", version = "^2.0.5" }
+bindings_header = "include/cdc_acm_bindings.h"
+bindings_module = "cdc_acm"
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = "espressif/led_strip", version = "^3.0.3" }
+bindings_header = "include/led_strip_bindings.h"
+bindings_module = "led_strip"
+
+[[package.metadata.esp-idf-sys.extra_components]]
+component_dirs = "../../vendor/espressif__esp_lcd_gc9107"
+bindings_header = "include/gc9107_bindings.h"
+bindings_module = "gc9107"
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = "espressif/esp_lcd_axs15231b", version = "^1.0.1" }
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = "espressif/esp_lcd_sh8601", version = "^1.0.0" }
+bindings_header = "include/sh8601_bindings.h"
+bindings_module = "display_drivers"
+
+[[package.metadata.esp-idf-sys.extra_components]]
+remote_component = { name = "espressif/esp_lcd_st7796", version = "^1.3.2" }
+
+[features]
+# Keep the proven display + TONEX USB + Web composition as the product default.
+# BLE MIDI remains isolated until its transport can meet the same hardware bar.
+default = ["host-sim", "wifi-web"]
+host-sim = []
+wifi-web = []
+serial-midi = []
+ble-midi = ["esp-idf-midi/ble-midi"]
+display-diagnostics = []
+ui-diagnostics = []
+usb-display-diagnostics = ["ui-diagnostics"]
+usb-connection-diagnostics = []
+touch-diagnostics = ["esp-idf-touch/diagnostics"]
+touch-disabled-diagnostics = []
+board-waveshare-169 = []
+board-waveshare-169-landscape = []
+board-waveshare-169-touch = []
+board-waveshare-169-touch-landscape = []
+board-waveshare-43b = []
+board-waveshare-35b = []
+board-jc3248w535 = []
+board-waveshare-zero = []
+board-devkitc-n8r2 = []
+board-devkitc-n16r8 = []
+board-m5-atoms3r = []
+board-lilygo-tdisplay-s3 = []
+board-waveshare-19-touch = []
+board-waveshare-7-43 = []
+board-pirate-polar-mini = []
+board-pirate-polar-plus = []
+board-pirate-polar-zero = []
+board-pirate-polar-43b = []
+board-pirate-polar-mini-v2 = []
+board-pirate-polar-plus-v2 = []
+board-pirate-polar-pro = []
+board-pirate-polar-max-v2 = []
+
+[lints]
+workspace = true

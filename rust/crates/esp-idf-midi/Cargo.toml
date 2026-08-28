@@ -1,0 +1,25 @@
+[package]
+name = "esp-idf-midi"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[features]
+default = []
+ble-midi = []
+
+[dependencies]
+tonex-boards = { path = "../tonex-boards", version = "0.1.0" }
+tonex-midi = { path = "../tonex-midi", version = "0.1.0" }
+tonex-domain = { path = "../tonex-domain", version = "0.1.0" }
+tonex-settings = { path = "../tonex-settings", version = "0.1.0" }
+
+[target.'cfg(target_os = "espidf")'.dependencies]
+esp-idf-diagnostics = { path = "../esp-idf-diagnostics", version = "0.1.0" }
+esp-idf-sys = "0.37.2"
+esp-idf-svc = "0.52.1"
+enumset = "1.1"
+
+[lints]
+workspace = true

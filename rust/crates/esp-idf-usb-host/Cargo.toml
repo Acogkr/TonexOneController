@@ -1,0 +1,19 @@
+[package]
+name = "esp-idf-usb-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+hal-contracts = { path = "../hal-contracts", version = "0.1.0" }
+
+[target.'cfg(target_os = "espidf")'.dependencies]
+esp-idf-sys = "0.37.2"
+
+[lints.rust]
+unsafe_code = "allow"
+
+[lints.clippy]
+all = "warn"
+pedantic = "warn"

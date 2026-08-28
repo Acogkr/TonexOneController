@@ -1,16 +1,12 @@
-name: ESP-IDF Build
+name: Legacy C reference build
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:  # Allows manual triggering from the Actions page
+  # The C firmware is retained only as migration evidence. It is deliberately
+  # excluded from push, pull-request, and release gates.
+  workflow_dispatch:
 
 env:
-  JSON_CONFIG_FILE: "source/esp_idf_project_configuration.json"
+  JSON_CONFIG_FILE: "legacy/source/esp_idf_project_configuration.json"
 
 jobs:
   extract-config:
@@ -53,7 +49,7 @@ jobs:
           clean: true
           # submodules: 'recursive'
           sparse-checkout: |
-            source/
+            legacy/source/
 
       - name: Setup ccache
         uses: hendrikmuhs/ccache-action@v1
@@ -73,13 +69,13 @@ jobs:
       - name: esp-idf build
         uses: espressif/esp-idf-ci-action@v1
         with:
-          path: 'source'
+          path: 'legacy/source'
           esp_idf_version: v5.5.1 # optional, default is latest
           target: esp32s3 # optional, default is esp32
           extra_docker_args: "-v ./.ccache:/root/.ccache -e CCACHE_DIR=/root/.ccache -e SDKCONFIG_DEFAULTS"
           command: "idf.py build"
 
-      - run: find ./source/build -type f
+      - run: find ./legacy/source/build -type f
 
       - run: ccache --print-stat
 
@@ -87,6 +83,6 @@ jobs:
         with:
           name: build-${{ matrix.platform }}
           path: |
-            source/build/**/*.bin
-            source/build/flasher_args.json
+            legacy/source/build/**/*.bin
+            legacy/source/build/flasher_args.json
           if-no-files-found: error

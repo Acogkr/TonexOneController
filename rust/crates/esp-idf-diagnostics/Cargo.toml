@@ -1,0 +1,12 @@
+[package]
+name = "esp-idf-diagnostics"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[target.'cfg(target_os = "espidf")'.dependencies]
+esp-idf-sys = "0.37.2"
+
+[lints]
+workspace = true

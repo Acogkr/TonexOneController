@@ -1,0 +1,8 @@
+I (60000) app: DIAG uptime_s=60 heap_free=200000 heap_min=198000 largest_block=120000 main_stack_hwm=4096 serial_midi_drops=0 ble_midi_drops=0 touch_drops=0 command_not_ready=0 command_errors=0 midi_mapping_errors=0 switch_read_errors=0 led_errors=0
+I (60000) display: DIAG_TASK name=display uptime_s=60 stack_hwm=3072 frames=20 render_last_us=920 render_max_us=1040 present_last_us=11800 present_max_us=12500
+I (60000) touch: DIAG_TASK name=touch uptime_s=60 stack_hwm=2200
+I (60000) serial-midi: DIAG_TASK name=serial-midi uptime_s=60 stack_hwm=1800
+I (120000) app: DIAG uptime_s=120 heap_free=199500 heap_min=197500 largest_block=119500 main_stack_hwm=4000 serial_midi_drops=0 ble_midi_drops=0 touch_drops=0 command_not_ready=0 command_errors=0 midi_mapping_errors=0 switch_read_errors=0 led_errors=0
+I (120000) display: DIAG_TASK name=display uptime_s=120 stack_hwm=3000 frames=42 render_last_us=900 render_max_us=1040 present_last_us=11700 present_max_us=12500
+I (120000) touch: DIAG_TASK name=touch uptime_s=120 stack_hwm=2100
+I (120000) serial-midi: DIAG_TASK name=serial-midi uptime_s=120 stack_hwm=1700

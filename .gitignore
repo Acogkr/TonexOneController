@@ -1,7 +1,23 @@
 # macOS folder attributes
 .DS_Store
 
-build_distrib/temp
+legacy/build_distrib/temp
 
 # ignore EEZ Studio state files
 **/*.eez-project-ui-state
+
+# Rust host and target build output
+target/
+artifacts/
+.embuild/
+legacy/.embuild-cache/
+legacy/Releases/
+legacy/build_distrib/
+
+# Local verification output and duplicated snapshots
+tmp/
+.verify-*.log
+legacy/verification-archives/
+
+# Unrelated local resource-pack experiments
+tools/generate_lostwar_*.py

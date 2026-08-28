@@ -1,0 +1,13 @@
+[package]
+name = "tonex-protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+tonex-domain = { path = "../tonex-domain", version = "0.1.0" }
+tonex-parameters = { path = "../tonex-parameters", version = "0.1.0" }
+
+[lints]
+workspace = true

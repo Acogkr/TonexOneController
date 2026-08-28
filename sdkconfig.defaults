@@ -1,0 +1,29 @@
+# Required by the optional Wi-Fi/Web adapter.
+CONFIG_HTTPD_WS_SUPPORT=y
+# CONFIG_USB_HOST_ENABLE_ENUM_FILTER_CALLBACK is not set
+# TONEX ONE exposes a large composite USB configuration descriptor. The
+# proven legacy controller uses 2048 bytes; ESP-IDF's 256-byte default cannot
+# complete enumeration and leaves the device absent from the address list.
+CONFIG_USB_HOST_CONTROL_TRANSFER_MAX_SIZE=2048
+
+# Match the retained controller's timing base. Its raw vTaskDelay(500) USB
+# startup guard is 500 ms at 1000 Hz, not five seconds.
+CONFIG_FREERTOS_HZ=1000
+
+# Match the proven legacy controller's runtime timing. USB protocol parsing
+# and QSPI rotation are latency-sensitive on this board.
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+CONFIG_ESP_INT_WDT_TIMEOUT_MS=3000
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# The Rust product composition owns large typed UI snapshots, preset labels,
+# parameter arrays, and the TONEX runtime on app_main. ESP-IDF's 3584-byte
+# default overflows even in a radio-free JC3248W535 build. Keep sufficient
+# headroom for every board/features combination; task stacks may use PSRAM.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=32768
+
+# The build-time table keeps NVS and PHY offsets aligned with the deployable
+# table. cargo-espflash replaces this size-limited table with the repository's
+# partitions.csv, which gives the factory application the remainder of the
+# minimum supported 4 MiB flash.
+CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y

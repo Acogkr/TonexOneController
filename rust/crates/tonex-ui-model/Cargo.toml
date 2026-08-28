@@ -1,0 +1,15 @@
+[package]
+name = "tonex-ui-model"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+tonex-domain = { path = "../tonex-domain", version = "0.1.0" }
+tonex-settings = { path = "../tonex-settings", version = "0.1.0" }
+tonex-skins = { path = "../tonex-skins", version = "0.1.0" }
+tonex-parameters = { path = "../tonex-parameters", version = "0.1.0" }
+
+[lints]
+workspace = true

@@ -1,0 +1,46 @@
+[workspace]
+resolver = "3"
+members = [
+    "rust/crates/tonex-domain",
+    "rust/crates/tonex-protocol",
+    "rust/crates/tonex-settings",
+    "rust/crates/tonex-skins",
+    "rust/crates/tonex-midi",
+    "rust/crates/tonex-parameters",
+    "rust/crates/tonex-controls",
+    "rust/crates/tonex-ui-model",
+    "rust/crates/tonex-ui-renderer",
+    "rust/crates/tonex-tuner",
+    "rust/crates/tonex-web",
+    "rust/crates/hal-contracts",
+    "rust/crates/esp-idf-usb-host",
+    "rust/crates/esp-idf-board-io",
+    "rust/crates/esp-idf-i2c",
+    "rust/crates/esp-idf-midi",
+    "rust/crates/esp-idf-touch",
+    "rust/crates/esp-idf-display",
+    "rust/crates/esp-idf-diagnostics",
+    "rust/crates/tonex-application",
+    "rust/crates/tonex-boards",
+    "rust/firmware/tonex-controller",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+rust-version = "1.85"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_debug_implementations = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+
+[profile.release]
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
+strip = "symbols"
